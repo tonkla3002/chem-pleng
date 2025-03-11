@@ -178,7 +178,7 @@ void eatAgent(int row,int column,int rowE,int columnE){
 
     if (board[rowE][columnE] == '^')
     {
-        if (board[rowE-1][columnE] = board[row][column])
+        if (board[rowE-1][columnE] == board[row][column])
         {
             
             board[rowE-1][columnE] = ' ';
@@ -197,7 +197,7 @@ void eatAgent(int row,int column,int rowE,int columnE){
 
     else if (board[rowE][columnE] == '>')
     {
-        if (board[rowE][columnE+1] = board[row][column])
+        if (board[rowE][columnE+1] == board[row][column])
         {
             
             board[rowE][columnE+1] = ' ';
@@ -216,7 +216,7 @@ void eatAgent(int row,int column,int rowE,int columnE){
 
     else if (board[rowE][columnE] == 'v')
     {   
-        if (board[rowE+1][columnE] = board[row][column])
+        if (board[rowE+1][columnE] == board[row][column])
         {
             
             board[rowE+1][columnE] = ' ';
@@ -232,6 +232,14 @@ void eatAgent(int row,int column,int rowE,int columnE){
             boardBack[row][column] = ' ';
         }
     }
+    else if((board[row][column] == 'K' && board[rowE][columnE] == 'J') || 
+            (board[row][column] == 'J' && board[rowE][columnE] == 'Q') || 
+            (board[row][column] == 'Q' && board[rowE][columnE] == 'K')){
+    
+        board[row][column] = ' ';
+        boardBack[row][column] = ' ';
+    }
+
     else if(board[rowE][columnE] == ' ' || 
         (board[rowE][columnE] == 'K' && board[row][column] == 'J') || 
         (board[rowE][columnE] == 'J' && board[row][column] == 'Q') || 
