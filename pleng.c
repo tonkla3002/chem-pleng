@@ -44,6 +44,10 @@ int main(void){
     board[4][2] = 'Q';
     board[4][3] = 'K';
 
+    board[1][0] = '^';
+    board[2][1] = '>';
+    board[3][4] = 'v';
+
     boardBack[0][1] = '1';
     boardBack[0][3] = '1';
     boardBack[0][2] = '1';
@@ -192,20 +196,31 @@ void  checkWin(){
     }
 }
 
-void  clearXPosition(){
-    for (int i = 0; i < 5; i++) {
-        for (int j = 0; j < 5; j++) {
-            if (board[i][j] == 'X' ) {
-                board[i][j] = ' ';
-            }
-        }
-    }
-   
-}
 
 void eatAgent(int row,int column,int rowE,int columnE){
-        
-    if(board[rowE][columnE] == ' ' || 
+
+    if (board[rowE][columnE] == '^')
+    {
+        board[rowE-1][columnE] = board[row][column];
+        board[row][column] = ' ';
+        boardBack[rowE-1][columnE] = boardBack[row][column];
+        boardBack[row][column] = ' ';
+    }
+    else if (board[rowE][columnE] == '>')
+    {
+        board[rowE][columnE+1] = board[row][column];
+        board[row][column] = ' ';
+        boardBack[rowE][columnE+1] = boardBack[row][column];
+        boardBack[row][column] = ' ';
+    }
+    else if (board[rowE][columnE] == 'v')
+    {
+        board[rowE+1][columnE] = board[row][column];
+        board[row][column] = ' ';
+        boardBack[rowE+1][columnE] = boardBack[row][column];
+        boardBack[row][column] = ' ';
+    }
+    else if(board[rowE][columnE] == ' ' || 
         (board[rowE][columnE] == 'K' && board[row][column] == 'J') || 
         (board[rowE][columnE] == 'J' && board[row][column] == 'Q') || 
         (board[rowE][columnE] == 'Q' && board[row][column] == 'K')){
