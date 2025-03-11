@@ -1,9 +1,6 @@
-//jชนะqแบบยังไม่โดน
-//
-
 #include <stdio.h>
-#include <unistd.h>    // สำหรับ sleep()
-#include <sys/select.h> // สำหรับ select()
+#include <windows.h>
+#include <conio.h>
 char player = '1';
 int column, row;
 int turn = 0;
@@ -32,79 +29,59 @@ void clearXPosition();
 void eatAgent(int row,int column,int rowE,int columnE);
 
 
-int main(void){
-    int value;
-    struct timeval timeout;
+int waitForInput(int *input, int timeoutSec) {
+    DWORD startTime = GetTickCount();
+    while (GetTickCount() - startTime < timeoutSec * 1000) {
+        if (_kbhit()) {
+            scanf("%d", input);
+            return 1;
+        }
+        Sleep(50);
+    }
+    return 0;
+}
 
+int main(void) {
     board[0][2] = 'J';
     board[0][1] = 'Q';
     board[0][3] = 'K';
-
     board[4][1] = 'J';
     board[4][2] = 'Q';
     board[4][3] = 'K';
-
     board[1][0] = '^';
     board[2][1] = '>';
     board[3][4] = 'v';
-
     boardBack[0][1] = '1';
     boardBack[0][3] = '1';
     boardBack[0][2] = '1';
-
     boardBack[4][1] = '2';
     boardBack[4][2] = '2';
     boardBack[4][3] = '2';
 
-
     while (start == 1) {
         checkWin();
         displayBoard();
-    
         printf("Player %c, select agent\n", player);
-        
-        struct timeval timeout;
-        fd_set fds;
-        FD_ZERO(&fds);
-        FD_SET(STDIN_FILENO, &fds);
-        
-        timeout.tv_sec = 3;  
-        timeout.tv_usec = 0;
-    
+
         printf("Enter the row [1-5]: ");
         fflush(stdout);
-        
-        int ret = select(STDIN_FILENO + 1, &fds, NULL, NULL, &timeout);
-        if (ret > 0) {
-            scanf("%d", &row);
-        } else {
+        if (!waitForInput(&row, 3)) {
             printf("\nTime out! Switching turn to Player %c.\n", player == '1' ? '2' : '1');
             player = (player == '1') ? '2' : '1';
             continue;
         }
-    
-        FD_ZERO(&fds);
-        FD_SET(STDIN_FILENO, &fds);
-        timeout.tv_sec = 10;  
-        timeout.tv_usec = 0;
-    
+
         printf("Enter the column [1-5]: ");
         fflush(stdout);
-        
-        ret = select(STDIN_FILENO + 1, &fds, NULL, NULL, &timeout);
-        if (ret > 0) {
-            scanf("%d", &column);
-        } else {
+        if (!waitForInput(&column, 10)) {
             printf("\nTime out! Switching turn to Player %c.\n", player == '1' ? '2' : '1');
             player = (player == '1') ? '2' : '1';
             continue;
         }
-        
+
         moveAgent(row - 1, column - 1, player);
         player = (player == '1') ? '2' : '1';
     }
-    
-
 }
 
 
