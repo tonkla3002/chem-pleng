@@ -178,24 +178,59 @@ void eatAgent(int row,int column,int rowE,int columnE){
 
     if (board[rowE][columnE] == '^')
     {
-        board[rowE-1][columnE] = board[row][column];
-        board[row][column] = ' ';
-        boardBack[rowE-1][columnE] = boardBack[row][column];
-        boardBack[row][column] = ' ';
+        if (board[rowE-1][columnE] = board[row][column])
+        {
+            
+            board[rowE-1][columnE] = ' ';
+            board[row][column] = ' ';
+            boardBack[rowE-1][columnE] = ' ';
+            boardBack[row][column] = ' ';
+        }
+        else{
+
+            board[rowE-1][columnE] = board[row][column];
+            board[row][column] = ' ';
+            boardBack[rowE-1][columnE] = boardBack[row][column];
+            boardBack[row][column] = ' ';
+        }
     }
+
     else if (board[rowE][columnE] == '>')
     {
-        board[rowE][columnE+1] = board[row][column];
-        board[row][column] = ' ';
-        boardBack[rowE][columnE+1] = boardBack[row][column];
-        boardBack[row][column] = ' ';
+        if (board[rowE][columnE+1] = board[row][column])
+        {
+            
+            board[rowE][columnE+1] = ' ';
+            board[row][column] = ' ';
+            boardBack[rowE][columnE+1] = ' ';
+            boardBack[row][column] = ' ';
+        }
+        else{
+
+            board[rowE][columnE+1] = board[row][column];
+            board[row][column] = ' ';
+            boardBack[rowE][columnE+1] = boardBack[row][column];
+            boardBack[row][column] = ' ';
+        }
     }
+
     else if (board[rowE][columnE] == 'v')
-    {
-        board[rowE+1][columnE] = board[row][column];
-        board[row][column] = ' ';
-        boardBack[rowE+1][columnE] = boardBack[row][column];
-        boardBack[row][column] = ' ';
+    {   
+        if (board[rowE+1][columnE] = board[row][column])
+        {
+            
+            board[rowE+1][columnE] = ' ';
+            board[row][column] = ' ';
+            boardBack[rowE+1][columnE] = ' ';
+            boardBack[row][column] = ' ';
+        }
+        else{
+
+            board[rowE+1][columnE] = board[row][column];
+            board[row][column] = ' ';
+            boardBack[rowE+1][columnE] = boardBack[row][column];
+            boardBack[row][column] = ' ';
+        }
     }
     else if(board[rowE][columnE] == ' ' || 
         (board[rowE][columnE] == 'K' && board[row][column] == 'J') || 
