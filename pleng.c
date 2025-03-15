@@ -59,8 +59,8 @@ int main(void) {
     boardBack[4][3] = '2';
 
     while (start == 1) {
-        checkWin();
         displayBoard();
+        checkWin();
         printf("Player %c, select agent\n", player);
 
         printf("Enter the row [1-5]: ");
@@ -142,34 +142,29 @@ void moveAgent(int row,int column, char player) {
         }
 }
 
-void  checkWin(){
-    int count1 = 0;
-    int count2 = 0;
+void checkWin(){
+    int count1 = 0, count2 = 0;
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
-            if (boardBack[i][j] == '1' ) {
-                count1++;
-            }
-            else if(boardBack[i][j] == '2' ){
-                count2++;
-            }
+            if (boardBack[i][j] == '1') count1++;
+            else if (boardBack[i][j] == '2') count2++;
         }
     }
 
-    if(count1 == 0 && count2 == 0){
-        printf("!!!! Draw!!!!");
-        displayBoard();
+    if (count1 == 0 && count2 == 0) {
+        printf("!!!! Draw !!!!\n");
+        start = 0;
+    } else if (count1 == 0) {
+        printf("!!!! Player 2 WIN !!!!\n");
+        start = 0;
+    } else if (count2 == 0) {
+        printf("!!!! Player 1 WIN !!!!\n");
         start = 0;
     }
-    else if(count1 == 0){
-        printf("!!!! Plyer 2 WIN !!!!");
+
+    if (!start) {
         displayBoard();
-        start = 0;
-    }
-    else if(count2 == 0){
-        printf("!!!! Plyer 1 WIN !!!!");
-        displayBoard();
-        start = 0;
+        exit(0);
     }
 }
 
